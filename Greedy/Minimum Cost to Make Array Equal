@@ -1,41 +1,27 @@
 class Solution {
-  public long minimumTotalCost(int[] nums1, int[] nums2) {
-    final int n = nums1.length;
+  public long minCost(int[] nums, int[] cost) {
     long ans = 0;
-    int maxFreq = 0;
-    int maxFreqNum = 0;
-    int shouldBeSwapped = 0;
-    int[] conflictedNumCount = new int[n + 1];
+    int l = Arrays.stream(nums).min().getAsInt();
+    int r = Arrays.stream(nums).max().getAsInt();
 
-    // Collect indices i s.t. nums1[i] == nums2[i] and record their `maxFreq`
-    // and `maxFreqNum`.
-    for (int i = 0; i < n; ++i)
-      if (nums1[i] == nums2[i]) {
-        final int conflictedNum = nums1[i];
-        if (++conflictedNumCount[conflictedNum] > maxFreq) {
-          maxFreq = conflictedNumCount[conflictedNum];
-          maxFreqNum = conflictedNum;
-        }
-        ++shouldBeSwapped;
-        ans += i;
-      }
-
-    // Collect indices with nums1[i] != nums2[i] that contribute less cost.
-    // This can be greedily achieved by iterating from 0 to n - 1.
-    for (int i = 0; i < n; ++i) {
-      // Since we have over `maxFreq * 2` spaces, `maxFreqNum` can be
-      // successfully distributed, so no need to collectextra spaces.
-      if (maxFreq * 2 <= shouldBeSwapped)
-        break;
-      if (nums1[i] == nums2[i])
-        continue;
-      // Nums == `maxFreqNum` worsen the result since they increase `maxFreq`.
-      if (nums1[i] == maxFreqNum || nums2[i] == maxFreqNum)
-        continue;
-      ++shouldBeSwapped;
-      ans += i;
+    while (l < r) {
+      final int m = (l + r) / 2;
+      final long cost1 = getCost(nums, cost, m);
+      final long cost2 = getCost(nums, cost, m + 1);
+      ans = Math.min(cost1, cost2);
+      if (cost1 < cost2)
+        r = m;
+      else
+        l = m + 1;
     }
 
-    return maxFreq * 2 > shouldBeSwapped ? -1 : ans;
+    return ans;
+  }
+
+  private long getCost(int[] nums, int[] cost, int target) {
+    long res = 0;
+    for (int i = 0; i < nums.length; ++i)
+      res += Math.abs(nums[i] - target) * (long) cost[i];
+    return res;
   }
 }

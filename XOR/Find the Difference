@@ -1,0 +1,18 @@
+class Solution {
+    public char findTheDifference(String s, String t) {
+         int AsciiS = asciiSum(s);
+        int AsciiT = asciiSum(t);
+       
+        return (char)(AsciiT-AsciiS);
+        
+       
+    }
+    public int asciiSum(String s){
+        int Sum = 0;
+         for(int i=0; i<s.length(); i++){
+            char ch = s.charAt(i);
+             Sum += ch;
+        }
+        return Sum;
+    }
+}

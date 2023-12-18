@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxProductDifference(vector<int>& nums) {
+        ios_base::sync_with_stdio(false);
+        cout.tie(0);
+        cin.tie(0);
+        
+        // code
+        auto it = max_element(nums.begin(),nums.end());
+        int index = it - nums.begin();
+        int max1 = nums[index];
+        nums.erase(nums.begin()+index);
+
+        it = max_element(nums.begin(),nums.end());
+        index = it - nums.begin();
+        int max2 = nums[index];
+        nums.erase(nums.begin()+index);
+        cout << max1 << " " << max2 << endl;
+
+        it = min_element(nums.begin(),nums.end());
+        index = it - nums.begin();
+        int min1 = nums[index];
+        nums.erase(nums.begin()+index);
+
+        it = min_element(nums.begin(),nums.end());
+        index = it - nums.begin();
+        int min2 = nums[index];
+        nums.erase(nums.begin()+index);
+        
+        return (max1 * max2 - min1 * min2);
+    }
+};

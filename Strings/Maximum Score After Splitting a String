@@ -1,0 +1,32 @@
+class Solution {
+public:
+    // Function to find the maximum score
+    int maxScore(string s) {
+        int o = 0; // Count of '1's
+        int z = 0; // Count of '0's
+        int ans = INT_MIN; // Initialize the answer as the minimum possible integer value
+
+        // Loop through the string, excluding the last character
+        for (int i = 0; i < s.size() - 1; i++) {
+            // Increment counts based on the current character
+            if (s[i] == '1')
+                o++; // Increment '1's count
+            else
+                z++; // Increment '0's count
+
+            // Update the maximum score by finding the maximum difference between '0's and '1's encountered so far
+            ans = max(ans, z - o);
+        }
+
+        // Check the last character of the string
+        // If it's '1', increment the '1's count
+        if (s[s.size() - 1] == '1')
+            o++;
+
+        // Return the maximum score obtained by adding the total '1's encountered with the maximum difference
+        return ans + o;
+    }
+};
+
+
+

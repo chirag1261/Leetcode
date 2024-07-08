@@ -1,0 +1,13 @@
+#include <bits/stdc++.h>
+class Solution {
+public:
+ 
+    int findTheWinner(int n, int k) {
+        
+        int idx = 0;
+        for (int i = 1; i <= n; i++) {
+            idx = (idx + k) % i;
+        }
+        return idx + 1;
+    }
+};
